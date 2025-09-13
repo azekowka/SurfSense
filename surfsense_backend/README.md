@@ -97,6 +97,9 @@ The API is structured with the following main route groups:
 
 The application is configured to run with Uvicorn and can be deployed with:
 ```
+python -m venv venv
+.\venv\Scripts\Activate.ps1
+uv sync
 python main.py
 ```
 
