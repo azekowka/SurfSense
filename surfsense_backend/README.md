@@ -99,7 +99,7 @@ The application is configured to run with Uvicorn and can be deployed with:
 ```
 python -m venv venv
 .\venv\Scripts\Activate.ps1
-uv sync
+uv sync --active
 python main.py
 ```
 
