@@ -13,29 +13,10 @@ interface DashboardLayoutProps {
 export default function DashboardLayout({ children }: DashboardLayoutProps) {
 	const router = useRouter();
 	const { loading, error, isOnboardingComplete } = useLLMPreferences();
-	const [isCheckingAuth, setIsCheckingAuth] = useState(true);
-
-	useEffect(() => {
-		// Check if user is authenticated
-		const token = localStorage.getItem("surfsense_bearer_token");
-		if (!token) {
-			router.push("/login");
-			return;
-		}
-		setIsCheckingAuth(false);
-	}, [router]);
-
-	useEffect(() => {
-		// Wait for preferences to load, then check if onboarding is complete
-		if (!loading && !error && !isCheckingAuth) {
-			if (!isOnboardingComplete()) {
-				router.push("/onboard");
-			}
-		}
-	}, [loading, error, isCheckingAuth, isOnboardingComplete, router]);
+	const [isCheckingAuth, setIsCheckingAuth] = useState(false);
 
 	// Show loading screen while checking authentication or loading preferences
-	if (isCheckingAuth || loading) {
+	if (loading) {
 		return (
 			<div className="flex flex-col items-center justify-center min-h-screen space-y-4">
 				<Card className="w-[350px] bg-background/60 backdrop-blur-sm">
@@ -71,22 +52,5 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
 	}
 
 	// Only render children if onboarding is complete
-	if (isOnboardingComplete()) {
-		return <>{children}</>;
-	}
-
-	// This should not be reached due to redirect, but just in case
-	return (
-		<div className="flex flex-col items-center justify-center min-h-screen space-y-4">
-			<Card className="w-[350px] bg-background/60 backdrop-blur-sm">
-				<CardHeader className="pb-2">
-					<CardTitle className="text-xl font-medium">Redirecting...</CardTitle>
-					<CardDescription>Taking you to complete your setup</CardDescription>
-				</CardHeader>
-				<CardContent className="flex justify-center py-6">
-					<Loader2 className="h-12 w-12 text-primary animate-spin" />
-				</CardContent>
-			</Card>
-		</div>
-	);
+	return <>{children}</>;
 }

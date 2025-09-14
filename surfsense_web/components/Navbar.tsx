@@ -22,14 +22,6 @@ export const Navbar = () => {
 			name: "Docs",
 			link: "/docs",
 		},
-		// {
-		//   name: "Product",
-		//   link: "/#product",
-		// },
-		// {
-		//   name: "Pricing",
-		//   link: "/#pricing",
-		// },
 	];
 
 	const ref = useRef<HTMLDivElement>(null);
@@ -60,7 +52,7 @@ const DesktopNav = ({ navItems, visible }: NavbarProps) => {
 
 	const handleGoogleLogin = () => {
 		// Redirect to the login page
-		window.location.href = "/login";
+		window.location.href = "/dashboard";
 	};
 
 	return (
